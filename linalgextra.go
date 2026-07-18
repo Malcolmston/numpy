@@ -56,18 +56,43 @@ func (a *NDArray) Outer(b *NDArray) *NDArray {
 	return out
 }
 
-// Cross returns the cross product of two 1-D arrays of length 3. The result is
-// a 1-D array of length 3. It panics if either operand is not a 3-vector.
+// Cross returns the cross product of two 1-D arrays, mirroring NumPy's
+// numpy.cross for 1-D inputs. Each operand must have length 2 or 3, with any
+// missing third component treated as zero:
+//
+//   - two 2-vectors yield the scalar z-component a[0]*b[1] - a[1]*b[0],
+//     returned as a 0-dimensional array whose single value is the result;
+//   - any combination involving a 3-vector yields a 3-vector.
+//
+// It panics if either operand is not 1-D or has a length other than 2 or 3.
 func (a *NDArray) Cross(b *NDArray) *NDArray {
-	if a.ndim != 1 || b.ndim != 1 || a.shape[0] != 3 || b.shape[0] != 3 {
-		panic("numpy: Cross requires two 1-D arrays of length 3")
+	if a.ndim != 1 || b.ndim != 1 {
+		panic("numpy: Cross requires two 1-D arrays")
+	}
+	na, nb := a.shape[0], b.shape[0]
+	if (na != 2 && na != 3) || (nb != 2 && nb != 3) {
+		panic("numpy: Cross requires vectors of length 2 or 3")
 	}
 	av := a.Data()
 	bv := b.Data()
+	// Pad each operand to length 3 with a zero third component.
+	a0, a1, a2 := av[0], av[1], 0.0
+	if na == 3 {
+		a2 = av[2]
+	}
+	b0, b1, b2 := bv[0], bv[1], 0.0
+	if nb == 3 {
+		b2 = bv[2]
+	}
+	if na == 2 && nb == 2 {
+		// Both 2-vectors: NumPy returns the scalar z-component as a
+		// 0-dimensional array.
+		return newArray([]float64{a0*b1 - a1*b0}, []int{})
+	}
 	out := []float64{
-		av[1]*bv[2] - av[2]*bv[1],
-		av[2]*bv[0] - av[0]*bv[2],
-		av[0]*bv[1] - av[1]*bv[0],
+		a1*b2 - a2*b1,
+		a2*b0 - a0*b2,
+		a0*b1 - a1*b0,
 	}
 	return newArray(out, []int{3})
 }

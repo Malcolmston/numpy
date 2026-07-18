@@ -1,0 +1,10 @@
+{
+  "repo": "numpy",
+  "upstream": "numpy/numpy",
+  "parityBefore": "94%",
+  "parityAfter": "100%",
+  "upstreamCasesSynced": 46,
+  "gapsFound": 3,
+  "gapsClosed": 3,
+  "asOf": "2026-07-18"
+}
