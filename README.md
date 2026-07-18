@@ -61,7 +61,17 @@ func main() {
 - **Reductions:** `Sum`, `Mean`, `Max`, `Min`, `Std`, `Var`, `Prod` over the
   whole array, and `SumAxis`, `MeanAxis`, `MaxAxis`, `MinAxis`, `StdAxis`,
   `ProdAxis` along an axis (with optional `keepdims`).
-- **Linear algebra:** `Dot` (1-D dot / 2-D matmul) and `MatMul`.
+- **More element-wise math:** `Tan`, `Sinh`, `Cosh`, `Tanh`, `Arcsin`,
+  `Arccos`, `Arctan`, `Arctan2`, `Hypot`, `Mod`, `Floor`, `Ceil`, `Round`,
+  `Trunc`, `Sign`, `Square`, `Reciprocal`, `Cbrt`, `Log2`, `Log10`, `Log1p`,
+  `Expm1`, and `Clip`.
+- **Sorting and searching:** `Sort`, `Argsort`, `Argmax`, `Argmin`, `Unique`,
+  `SearchSorted`.
+- **Cumulative ops:** `Cumsum`, `Cumprod`, `Diff`, `Ptp`.
+- **Statistics:** `Median`, `Percentile`, `Quantile`, `VarDDof`, `StdDDof`.
+- **Linear algebra:** `Dot` (1-D dot / 2-D matmul), `MatMul`, `Trace`,
+  `Diagonal`, `Outer`, `Cross`, `Norm`, and `Diag`.
+- **More manipulation:** `Flip`, `Roll`, `Squeeze`, `ExpandDims`.
 - **Comparison and masking:** `Greater`, `GreaterEqual`, `Less`, `LessEqual`,
   `EqualMask`, `NotEqualMask` (and scalar variants), `MaskSelect`, `Where`,
   `Any`, `All`.
@@ -77,4 +87,5 @@ be chained. Wrap calls with `recover` if you need to trap invalid usage.
 
 ## Version
 
-See the `VERSION` file. Current version: `0.1.0`.
+See the `VERSION` file. Current version: `0.2.0`. See `CHANGELOG.md` for the
+list of changes.
